@@ -18,7 +18,7 @@ public class JobServiceImpl implements JobService {
         this.jobRepository = jobRepository;
     }
 
-    // List<Job> jobs = new ArrayList<>();
+    List<Job> jobs = new ArrayList<>();
     // private Long nextId = 1L;
 
     @Override
