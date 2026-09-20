@@ -3,20 +3,22 @@ package com.chamil.demo.company.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.chamil.demo.company.Company;
 import com.chamil.demo.company.CompanyRepository;
 import com.chamil.demo.company.CompanyService;
+import com.chamil.demo.company.mapper.CompanyMapper;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
-    CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
+    private final CompanyMapper companyMapper;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, CompanyMapper companyMapper) {
         this.companyRepository = companyRepository;
+        this.companyMapper = companyMapper;
     }
 
     @Override
@@ -29,9 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
         Optional<Company> comOptional = companyRepository.findById(id);
         if (comOptional.isPresent()) {
             Company company = comOptional.get();
-            company.setDescription(companyUpdated.getDescription());
-            company.setName(companyUpdated.getName());
-            company.setJobs(companyUpdated.getJobs());
+            companyMapper.updateEntity(company, companyUpdated);
             companyRepository.save(company);
             return true;
         }
