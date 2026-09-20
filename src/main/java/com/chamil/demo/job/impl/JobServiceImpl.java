@@ -13,7 +13,7 @@ import com.chamil.demo.job.JobService;
 @Service
 public class JobServiceImpl implements JobService {
     JobRepository jobRepository;
-
+// private Long nextId = 1L;
     public JobServiceImpl(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
     }
