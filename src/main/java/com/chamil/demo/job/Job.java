@@ -4,6 +4,8 @@ import com.chamil.demo.company.Company;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,6 +23,9 @@ public class Job {
     private String minSalary;
     private String maxSalary;
     private String location;
+
+    @Enumerated(EnumType.STRING)
+    private EmploymentType employmentType;
 
     @JsonIgnore // Recurtion error
     @ManyToOne
@@ -85,6 +90,14 @@ public class Job {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public EmploymentType getEmploymentType() {
+        return employmentType;
+    }
+
+    public void setEmploymentType(EmploymentType employmentType) {
+        this.employmentType = employmentType;
     }
 
     public Company getCompany() {

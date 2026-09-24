@@ -13,8 +13,8 @@ import com.chamil.demo.job.JobService;
 
 @Service
 public class JobServiceImpl implements JobService {
-    JobRepository jobRepository;
-    private CompanyService companyService;
+    private final JobRepository jobRepository;
+    private final CompanyService companyService;
 
     public JobServiceImpl(JobRepository jobRepository, CompanyService companyService) {
         this.jobRepository = jobRepository;
@@ -67,6 +67,7 @@ public class JobServiceImpl implements JobService {
             job.setMaxSalary(updatedJob.getMaxSalary());
             job.setMinSalary(updatedJob.getMinSalary());
             job.setTitle(updatedJob.getTitle());
+            job.setEmploymentType(updatedJob.getEmploymentType());
             job.setCompany(company);
             jobRepository.save(job);
             return true;

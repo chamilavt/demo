@@ -13,8 +13,8 @@ import com.chamil.demo.review.ReviewService;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
-    private ReviewRepository reviewRepository;
-    private CompanyService companyService;
+    private final ReviewRepository reviewRepository;
+    private final CompanyService companyService;
 
     public ReviewServiceImpl(ReviewRepository reviewRepository,
             CompanyService companyService) {
