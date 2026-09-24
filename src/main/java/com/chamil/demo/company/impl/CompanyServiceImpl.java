@@ -3,7 +3,6 @@ package com.chamil.demo.company.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.chamil.demo.company.Company;
@@ -25,12 +24,18 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public List<Company> findAllByIndustry(CompanyIndustry industry) {
+        return companyRepository.findByIndustry(industry);
+    }
+
+    @Override
     public boolean update(Long id, Company companyUpdated) {
         Optional<Company> comOptional = companyRepository.findById(id);
         if (comOptional.isPresent()) {
             Company company = comOptional.get();
             company.setDescription(companyUpdated.getDescription());
             company.setName(companyUpdated.getName());
+            company.setIndustry(companyUpdated.getIndustry());
             companyRepository.save(company);
             return true;
         }
