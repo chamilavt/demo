@@ -43,8 +43,18 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void create(Company company) {
+    public boolean create(Company company) {
+        if (company.getRegistrationNumber() != null
+                && companyRepository.existsByRegistrationNumber(company.getRegistrationNumber())) {
+            return false;
+        }
         companyRepository.save(company);
+        return true;
+    }
+
+    @Override
+    public boolean registrationNumberExists(String registrationNumber) {
+        return companyRepository.existsByRegistrationNumber(registrationNumber);
     }
 
     @Override

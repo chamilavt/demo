@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Column;
 
 @Entity
 public class Company {
@@ -21,6 +22,8 @@ public class Company {
     private Long id;
     private String name;
     private String description;
+    @Column(unique = true)
+    private String registrationNumber;
 
     @Enumerated(EnumType.STRING)
     private CompanyIndustry industry = CompanyIndustry.OTHER;
@@ -56,6 +59,14 @@ public class Company {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
     }
 
     public CompanyIndustry getIndustry() {

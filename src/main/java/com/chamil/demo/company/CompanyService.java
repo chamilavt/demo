@@ -12,7 +12,9 @@ public interface CompanyService {
 
     boolean update(Long id, Company company);
 
-    void create(Company company);
+    boolean create(Company company);
+
+    boolean registrationNumberExists(String registrationNumber);
 
     boolean delete(Long id);
 

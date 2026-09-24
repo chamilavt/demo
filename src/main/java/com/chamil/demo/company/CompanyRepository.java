@@ -10,4 +10,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
 	List<Company> findByIndustry(CompanyIndustry industry);
 
+	boolean existsByRegistrationNumber(String registrationNumber);
+
 }
