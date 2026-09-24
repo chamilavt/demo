@@ -13,7 +13,7 @@ import com.chamil.demo.company.CompanyService;
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
-    CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
     public CompanyServiceImpl(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
@@ -31,7 +31,6 @@ public class CompanyServiceImpl implements CompanyService {
             Company company = comOptional.get();
             company.setDescription(companyUpdated.getDescription());
             company.setName(companyUpdated.getName());
-            company.setJobs(companyUpdated.getJobs());
             companyRepository.save(company);
             return true;
         }
