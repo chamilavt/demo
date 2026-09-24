@@ -10,6 +10,7 @@ import com.chamil.demo.company.CompanyService;
 import com.chamil.demo.review.Review;
 import com.chamil.demo.review.ReviewRepository;
 import com.chamil.demo.review.ReviewService;
+import com.chamil.demo.review.ReviewStatus;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -28,10 +29,18 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public List<Review> findAllReviewsByCompanyIdAndStatus(Long companyId, ReviewStatus status) {
+        return reviewRepository.findByCompanyIdAndStatus(companyId, status);
+    }
+
+    @Override
     public boolean addReview(Long companyId, Review review) {
         Company company = companyService.findById(companyId);
         if (company != null) {
             review.setCompany(company);
+            if (review.getStatus() == null) {
+                review.setStatus(ReviewStatus.PENDING);
+            }
             reviewRepository.save(review);
             return true;
         }
@@ -54,6 +63,7 @@ public class ReviewServiceImpl implements ReviewService {
         if (review != null) {
             review.setDescription(updateReview.getDescription());
             review.setRating(updateReview.getRating());
+            review.setStatus(updateReview.getStatus());
             review.setTitle(updateReview.getTitle());
             reviewRepository.save(review);
             return true;

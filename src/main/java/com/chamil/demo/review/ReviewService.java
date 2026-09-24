@@ -6,6 +6,8 @@ public interface ReviewService {
 
     List<Review> findAllReviewsByCompanyId(Long companyId);
 
+    List<Review> findAllReviewsByCompanyIdAndStatus(Long companyId, ReviewStatus status);
+
     boolean addReview(Long companyId, Review review);
 
     Review getReviewById(Long companyId, Long reviewId);
