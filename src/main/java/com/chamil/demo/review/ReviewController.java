@@ -25,7 +25,13 @@ public class ReviewController {
     }
 
     @GetMapping("/reviews")
-    public ResponseEntity<List<Review>> getAllReviewsByCompany(@PathVariable Long companyId) {
+    public ResponseEntity<List<Review>> getAllReviewsByCompany(
+            @PathVariable Long companyId,
+            @RequestParam(required = false) ReviewStatus status) {
+        if (status != null) {
+            return ResponseEntity.ok()
+                    .body(reviewService.findAllReviewsByCompanyIdAndStatus(companyId, status));
+        }
         return ResponseEntity.ok().body(reviewService.findAllReviewsByCompanyId(companyId));
     }
 
@@ -58,7 +64,7 @@ public class ReviewController {
 
     }
 
-    @DeleteMapping("/review/{reviewId}")
+    @DeleteMapping("/reviews/{reviewId}")
     public ResponseEntity<String> deleteReview(@PathVariable Long companyId,
             @PathVariable Long reviewId) {
         boolean isDeleted = reviewService.deleteReview(companyId, reviewId);

@@ -4,6 +4,8 @@ import com.chamil.demo.company.Company;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +19,9 @@ public class Review {
     private String title;
     private String description;
     private double rating;
+
+    @Enumerated(EnumType.STRING)
+    private ReviewStatus status = ReviewStatus.PENDING;
 
     @JsonIgnore
     @ManyToOne
@@ -55,6 +60,14 @@ public class Review {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public ReviewStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ReviewStatus status) {
+        this.status = status;
     }
 
     public Company getCompany() {

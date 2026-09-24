@@ -10,11 +10,12 @@ import com.chamil.demo.company.CompanyService;
 import com.chamil.demo.review.Review;
 import com.chamil.demo.review.ReviewRepository;
 import com.chamil.demo.review.ReviewService;
+import com.chamil.demo.review.ReviewStatus;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
-    private ReviewRepository reviewRepository;
-    private CompanyService companyService;
+    private final ReviewRepository reviewRepository;
+    private final CompanyService companyService;
 
     public ReviewServiceImpl(ReviewRepository reviewRepository,
             CompanyService companyService) {
@@ -28,10 +29,18 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public List<Review> findAllReviewsByCompanyIdAndStatus(Long companyId, ReviewStatus status) {
+        return reviewRepository.findByCompanyIdAndStatus(companyId, status);
+    }
+
+    @Override
     public boolean addReview(Long companyId, Review review) {
         Company company = companyService.findById(companyId);
         if (company != null) {
             review.setCompany(company);
+            if (review.getStatus() == null) {
+                review.setStatus(ReviewStatus.PENDING);
+            }
             reviewRepository.save(review);
             return true;
         }
@@ -54,6 +63,7 @@ public class ReviewServiceImpl implements ReviewService {
         if (review != null) {
             review.setDescription(updateReview.getDescription());
             review.setRating(updateReview.getRating());
+            review.setStatus(updateReview.getStatus());
             review.setTitle(updateReview.getTitle());
             reviewRepository.save(review);
             return true;
@@ -63,14 +73,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public boolean deleteReview(Long companyId, Long reviewId) {
-        if (companyService.findById(companyId) != null
-                && getReviewById(companyId, reviewId) != null) {
-            Review review = getReviewById(companyId, reviewId);
-            Company company = companyService.findById(companyId);
-            company.getReviews().remove(review);// Remove from company reviews list
-            review.setCompany(null);
-            companyService.update(companyId, company);
-            reviewRepository.deleteById(reviewId);// Delete from DB
+        Review review = getReviewById(companyId, reviewId);
+        if (review != null) {
+            reviewRepository.delete(review);
             return true;
         }
         return false;
