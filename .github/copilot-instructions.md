@@ -25,6 +25,7 @@ Current fields:
 - `id`
 - `name`
 - `description`
+- `registrationNumber` (optional, unique)
 - `jobs`
 - `reviews`
 
@@ -70,6 +71,7 @@ Relationship:
 - Do not create orphan jobs or reviews when a company relationship is required.
 - Do not blindly accept a client-supplied `company` object when the company is identified by a path variable; resolve the company from persistence and set the relationship server-side.
 - Preserve JPA relationship integrity when creating, updating, or deleting child entities.
+- A company's `registrationNumber` is optional, but when supplied it must be unique across all companies. Enforce uniqueness in the service layer using `CompanyRepository.existsByRegistrationNumber(...)` in addition to the database unique constraint, and return `409 Conflict` when a duplicate is submitted.
 
 ## 3. Architecture Principles
 
