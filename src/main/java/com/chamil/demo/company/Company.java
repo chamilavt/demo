@@ -7,6 +7,8 @@ import com.chamil.demo.review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,6 +21,9 @@ public class Company {
     private Long id;
     private String name;
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    private CompanyIndustry industry = CompanyIndustry.OTHER;
 
     @OneToMany(mappedBy = "company")
     private List<Job> jobs;
@@ -51,6 +56,14 @@ public class Company {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public CompanyIndustry getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(CompanyIndustry industry) {
+        this.industry = industry;
     }
 
     public List<Job> getJobs() {

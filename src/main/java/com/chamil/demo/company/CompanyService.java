@@ -8,6 +8,8 @@ public interface CompanyService {
 
     List<Company> findAll();
 
+    List<Company> findAllByIndustry(CompanyIndustry industry);
+
     boolean update(Long id, Company company);
 
     void create(Company company);

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(path = "/companies")
@@ -25,7 +26,11 @@ public class CompanyController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Company>> findAll() {
+    public ResponseEntity<List<Company>> findAll(
+            @RequestParam(required = false) CompanyIndustry industry) {
+        if (industry != null) {
+            return ResponseEntity.ok(companyService.findAllByIndustry(industry));
+        }
         List<Company> companies = companyService.findAll();
         return ResponseEntity.ok().body(companies);
     }
