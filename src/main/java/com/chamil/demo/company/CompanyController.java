@@ -2,18 +2,14 @@ package com.chamil.demo.company;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import io.micrometer.core.ipc.http.HttpSender.Response;
-
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping(path = "/companies")
 public class CompanyController {
 
-    @Autowired
-    CompanyService companyService;
+    private final CompanyService companyService;
+
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Company>> findAll() {
@@ -43,10 +42,10 @@ public class CompanyController {
     @PostMapping
     public ResponseEntity<String> create(@RequestBody Company company) {
         companyService.create(company);
-        return new ResponseEntity<>("Company created sussfully", HttpStatus.CREATED);
+        return new ResponseEntity<>("Company created successfully", HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable(value = "id") Long id) {
         boolean deleted = companyService.delete(id);
         if (deleted) {

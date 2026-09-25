@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/companies/{companyId}")
 public class ReviewController {
-    private ReviewService reviewService;
+    private final ReviewService reviewService;
 
     public ReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
@@ -58,7 +57,7 @@ public class ReviewController {
 
     }
 
-    @DeleteMapping("/review/{reviewId}")
+    @DeleteMapping("/reviews/{reviewId}")
     public ResponseEntity<String> deleteReview(@PathVariable Long companyId,
             @PathVariable Long reviewId) {
         boolean isDeleted = reviewService.deleteReview(companyId, reviewId);
