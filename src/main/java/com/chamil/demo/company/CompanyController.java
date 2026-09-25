@@ -46,10 +46,7 @@ public class CompanyController {
 
     @PostMapping
     public ResponseEntity<String> create(@RequestBody Company company) {
-        if (!companyService.create(company)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body("Registration number already exists");
-        }
+        companyService.create(company);
         return new ResponseEntity<>("Company created sussfully", HttpStatus.CREATED);
     }
 
