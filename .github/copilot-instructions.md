@@ -25,6 +25,7 @@ Current fields:
 - `id`
 - `name`
 - `description`
+- `registrationNumber`
 - `jobs`
 - `reviews`
 
@@ -64,6 +65,9 @@ Relationship:
 
 ### Domain Rules
 
+- A company `registrationNumber` is mandatory and must match `XX-123456` (two uppercase letters, a hyphen, then six digits). Missing or malformed values must be rejected with `400 Bad Request` via a specific domain exception.
+- A company `registrationNumber` must be unique across all companies. Duplicate values must be rejected with `409 Conflict`.
+- Registration-number validation must be enforced in the service layer and covered by tests for missing, invalid-format, duplicate, and valid values.
 - A job associated with a company must reference a valid company.
 - A review associated with a company must reference a valid company.
 - Company-scoped review operations must operate only on reviews belonging to the requested company.
