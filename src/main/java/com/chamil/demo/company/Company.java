@@ -22,7 +22,7 @@ public class Company {
     private Long id;
     private String name;
     private String description;
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String registrationNumber;
 
     @Enumerated(EnumType.STRING)

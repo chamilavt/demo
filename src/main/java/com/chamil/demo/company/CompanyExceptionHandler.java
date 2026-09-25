@@ -13,4 +13,10 @@ public class CompanyExceptionHandler {
             DuplicateRegistrationNumberException exception) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
+
+    @ExceptionHandler(InvalidRegistrationNumberException.class)
+    public ResponseEntity<String> handleInvalidRegistrationNumber(
+            InvalidRegistrationNumberException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
 }
