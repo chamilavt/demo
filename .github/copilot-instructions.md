@@ -25,6 +25,7 @@ Current fields:
 - `id`
 - `name`
 - `description`
+- `registrationNumber`
 - `jobs`
 - `reviews`
 
@@ -70,6 +71,10 @@ Relationship:
 - Do not create orphan jobs or reviews when a company relationship is required.
 - Do not blindly accept a client-supplied `company` object when the company is identified by a path variable; resolve the company from persistence and set the relationship server-side.
 - Preserve JPA relationship integrity when creating, updating, or deleting child entities.
+- A company must have a `registrationNumber` matching the format `XX-123456` (two uppercase letters, a hyphen, then six digits). Missing or malformed values must be rejected with `400 Bad Request`.
+- A company's `registrationNumber` must be unique across all companies. Duplicate values must be rejected with `409 Conflict`.
+- Validate the registration-number format and uniqueness in the service layer before persisting the company.
+- Cover missing, invalid-format, duplicate, and valid registration-number cases with unit tests.
 
 ## 3. Architecture Principles
 
