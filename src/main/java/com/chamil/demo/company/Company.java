@@ -7,6 +7,7 @@ import com.chamil.demo.review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,6 +20,8 @@ public class Company {
     private Long id;
     private String name;
     private String description;
+    @Column(nullable = false, unique = true)
+    private String registrationNumber;
 
     @OneToMany(mappedBy = "company")
     private List<Job> jobs;
@@ -51,6 +54,14 @@ public class Company {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
     }
 
     public List<Job> getJobs() {
