@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.chamil.demo.company.Company;
 import com.chamil.demo.company.CompanyRepository;
 import com.chamil.demo.company.CompanyService;
+import com.chamil.demo.company.DuplicateRegistrationNumberException;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -43,13 +44,12 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public boolean create(Company company) {
+    public void create(Company company) {
         if (company.getRegistrationNumber() != null
                 && companyRepository.existsByRegistrationNumber(company.getRegistrationNumber())) {
-            return false;
+            throw new DuplicateRegistrationNumberException(company.getRegistrationNumber());
         }
         companyRepository.save(company);
-        return true;
     }
 
     @Override
